@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 type LogoProps = {
-  url: string
+  url?: string
 }
 
 const Logo = ({ url = '/' }: LogoProps) => {
@@ -14,7 +14,7 @@ const Logo = ({ url = '/' }: LogoProps) => {
       </div>
 
       <div className="flex-1 text-left text-base leading-tight">
-        <span className="font-medium">toto</span>
+        <span className="font-medium">toto.AI</span>
       </div>
     </Link>
   );
