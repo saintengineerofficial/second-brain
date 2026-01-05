@@ -12,6 +12,7 @@ import { RiLoader2Line } from '@remixicon/react';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { useAuthToken } from '@/store/useAuthToken';
 
 const signInFormSchema = z.object({
   email: z.email('Invalid email').min(1, 'Email is required'),
@@ -22,6 +23,7 @@ type SignInFormValues = z.infer<typeof signInFormSchema>
 
 const SignInForm = () => {
   const router = useRouter()
+  const { setBearerToken } = useAuthToken()
   const [isLoading, setIsLoading] = useState(false)
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema),
@@ -42,6 +44,10 @@ const SignInForm = () => {
         setIsLoading(true)
       },
       onSuccess: (ctx) => {
+        const token = ctx.response.headers.get("set-auth-token");
+        if (token) {
+          setBearerToken(token);
+        }
         setIsLoading(false)
         router.replace('/home')
       },

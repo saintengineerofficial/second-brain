@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { RiLoader5Fill } from "@remixicon/react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import AppSidebar from "@/components/layout/AppSidebar";
 import { auth } from "@/lib/auth";
+import AppSidebar from "@/components/layout/AppSideBar";
 
 export default async function DashboardLayout({
   children,
