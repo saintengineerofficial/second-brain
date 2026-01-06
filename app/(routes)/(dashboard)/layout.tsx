@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { auth } from "@/lib/auth";
 import AppSidebar from "@/components/layout/AppSideBar";
 import DashBoardContent from "./_components/DashBoardContent";
+import NoteDialog from "./_components/NoteDialog";
 
 export default async function DashboardLayout({
   children,
@@ -14,7 +15,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await auth.api.getSession({
-    headers: await headers(), // you need to pass the headers object.
+    headers: await headers(),
   });
 
   if (!session) {
@@ -31,11 +32,10 @@ export default async function DashboardLayout({
     >
       <NuqsAdapter>
         <SidebarProvider>
-          {/* {App Sidebar} */}
           <AppSidebar />
           <SidebarInset className="relative overflow-x-hidden pt-0">
             <DashBoardContent>{children}</DashBoardContent>
-            {/* <NoteDialog /> */}
+            <NoteDialog />
           </SidebarInset>
         </SidebarProvider>
       </NuqsAdapter>

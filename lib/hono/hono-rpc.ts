@@ -5,4 +5,4 @@ const NEXT_PUBLIC_APP_URL = process.env.NEXT_PUBLIC_APP_URL!
 
 export const client = hc<AppType>(NEXT_PUBLIC_APP_URL)
 
-export const api = client.api // ?
+export const api = client.api
