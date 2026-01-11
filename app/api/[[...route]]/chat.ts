@@ -29,6 +29,7 @@ const chatIdSchema = z.object({
 
 export const chatRoute = new Hono()
   .post("/", zValidator("json", chatSchema), getAuthUser, async c => {
+    // 前端只发最后一条 UI message + chatId，后端用 id 去 DB 拉历史 → 组装 modelMessages → streamText + tools + stopWhen → toUIMessageStreamResponse 回给 useChat
     try {
       const user = c.get("user")
       const { id, message, selectedModelId, selectedToolName } = c.req.valid("json")
@@ -51,7 +52,7 @@ export const chatRoute = new Hono()
 
       const messageFromDB = await prisma.message.findMany({
         where: { chatId: chat.id },
-        orderBy: { createdAt: "desc" },
+        orderBy: { createdAt: "asc" },
       })
 
       const mapUIMessages = messageFromDB.map(m => ({
@@ -99,6 +100,7 @@ export const chatRoute = new Hono()
         },
       })
 
+      // 流式
       return result.toUIMessageStreamResponse({
         sendSources: true,
         generateMessageId: () => generateUUID(),
@@ -110,7 +112,7 @@ export const chatRoute = new Hono()
               data: messages.map(m => ({
                 id: m.id || generateUUID(),
                 role: m.role,
-                parts: JSON.parse(JSON.stringify(message.parts)),
+                parts: JSON.parse(JSON.stringify(m.parts)),
                 chatId: chat.id,
                 createdAt: new Date(),
                 updatedAt: new Date(),
