@@ -1,16 +1,18 @@
+'use client'
 import { DefaultChatTransport, UIMessage } from "ai"
 import React, { useEffect, useState } from "react"
 import { useChat } from "@ai-sdk/react"
 import { generateUUID } from "@/lib/utils"
 import { DEFAULT_MODEL_ID } from "@/lib/ai/models"
-import ChatInput from "./ChatInput/ChatInput"
+import ChatInput from "./ChatInput"
+import ChatMessages from "./ChatMessages"
 
 type Props = {
   chatId: string
   initialMessages: UIMessage[]
   initialLoading: boolean
   onlyInput: boolean
-  inputDisable: boolean
+  inputDisable?: boolean
 }
 
 const Chat = ({ chatId, initialLoading, initialMessages, onlyInput, inputDisable }: Props) => {
@@ -37,8 +39,8 @@ const Chat = ({ chatId, initialLoading, initialMessages, onlyInput, inputDisable
         }
       },
     }),
-    async onToolCall() {},
-    onFinish: () => {},
+    async onToolCall() { },
+    onFinish: () => { },
     onError: error => {
       console.log("Chat error", error)
     },
@@ -54,7 +56,6 @@ const Chat = ({ chatId, initialLoading, initialMessages, onlyInput, inputDisable
     return (
       <div className="relative w-full">
         <ChatInput
-          className="w-full"
           chatId={chatId}
           input={input}
           setInput={val => setInput(val)}
@@ -70,8 +71,26 @@ const Chat = ({ chatId, initialLoading, initialMessages, onlyInput, inputDisable
 
   return (
     <div className="bg-background flex h-screen min-w-0 flex-col overflow-x-hidden">
-      <div className="bg-background sticky inset-y-1 bottom-1 z-[1] mt-2 flex w-full gap-2 px-4 pb-1">
-        <div className="relative mx-auto w-full md:max-w-3xl"></div>
+      <ChatMessages
+        chatId={chatId}
+        messages={messages}
+        status={status}
+        error={error}
+        isLoading={initialLoading}
+      />
+      <div className="bg-background sticky inset-y-1 bottom-1 z-1 mt-2 flex w-full gap-2 px-4 pb-1">
+        <div className="relative mx-auto w-full md:max-w-3xl">
+          <ChatInput
+            chatId={chatId}
+            input={input}
+            setInput={val => setInput(val)}
+            messages={messages}
+            status={status}
+            stop={stop}
+            initialModelId={DEFAULT_MODEL_ID}
+            sendMessage={sendMessage}
+          />
+        </div>
       </div>
     </div>
   )

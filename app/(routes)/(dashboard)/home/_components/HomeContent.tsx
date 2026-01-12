@@ -14,7 +14,7 @@ const MainSection = ({ id }: Props) => {
   const { isChatView } = useViewState();
   return (
     <React.Fragment>
-      <ChatHeader showActions={isChatView} />
+      {/* <ChatHeader showActions={isChatView} /> */}
       <div className="relative w-full">
         <div className={cn("w-full ", !isChatView && "max-w-2xl mx-auto space-y-5 px-4 md:px-0")}>
           {!isChatView && (

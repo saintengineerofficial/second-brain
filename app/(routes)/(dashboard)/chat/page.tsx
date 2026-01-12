@@ -1,9 +1,27 @@
 import React from "react"
+import { generateUUID } from "@/lib/utils";
+import ChatInterface from "./_components/Chat";
+import ChatHeader from "../_components/ChatHeader";
 
 type Props = {}
 
 const Page = (props: Props) => {
-  return <div>Page</div>
+  const id = generateUUID();
+
+  return (
+    <>
+      {/* <ChatHeader showActions /> */}
+      <div className="relative w-full">
+        <ChatInterface
+          key={id}
+          chatId={id}
+          initialMessages={[]}
+          initialLoading={false}
+          onlyInput={false}
+        />
+      </div>
+    </>
+  )
 }
 
 export default Page
