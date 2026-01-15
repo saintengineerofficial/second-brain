@@ -76,7 +76,7 @@ const ChatInput = (props: Props) => {
 
     sendMessage(
       { role: 'user', parts: [{ type: 'text', text: input }] },
-      { body: { selectedModelId, selectedToolName: selectedTool?.name } }
+      { body: { selectedModelId, selectedToolName: selectedTool?.name || null } }
     )
     setInput("");
   }

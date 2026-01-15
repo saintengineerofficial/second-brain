@@ -4,6 +4,9 @@ import { cn } from "@/lib/utils"
 import type { UIMessage } from "ai"
 import React from "react"
 import { ReasoningContent, ReasoningTrigger } from "../../../../../../components/ai-elements/reasoning"
+import { ToolTypeEnum } from "@/lib/ai/tools/constant"
+import { webSearch } from '../../../../../../lib/ai/tools/webSearch';
+import { extractWebUrl } from '../../../../../../lib/ai/tools/extractWebUrl';
 
 type Props = {
   message: UIMessage
@@ -22,16 +25,34 @@ const PreviewMessage = ({ message, isLoading }: Props) => {
         )}>
         {message.parts.map((part, i) => {
           switch (part.type) {
-            case "text":
+            case "text": {
               return <MessageResponse key={`${message.id}-${i}`}>{part.text}</MessageResponse>
+            }
 
-            case "reasoning":
+            case "reasoning": {
               return (
                 <Reasoning key={`${message.id}-reason-${i}`}>
                   <ReasoningTrigger />
                   <ReasoningContent>{part.text}</ReasoningContent>
                 </Reasoning>
               )
+            }
+
+            case ToolTypeEnum.CreateNote: {
+
+            }
+
+            case ToolTypeEnum.SearchNote: {
+
+            }
+
+            case ToolTypeEnum.WebSearch: {
+
+            }
+
+            case ToolTypeEnum.ExtractWebUrl: {
+
+            }
 
             default:
               return null

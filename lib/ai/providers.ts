@@ -12,7 +12,7 @@ const createLanguageModels = () => {
 
   models[DEVELOPMENT_CHAT_MODEL] = google.languageModel(DEVELOPMENT_CHAT_MODEL)
 
-  models["title-model"] = isProduction ? gateway.languageModel("google/gemini-2.0-flash") : google.languageModel(DEVELOPMENT_CHAT_MODEL)
+  models["title-model"] = isProduction ? gateway.languageModel("google/gemini-2.5-flash") : google.languageModel(DEVELOPMENT_CHAT_MODEL)
 
   return models
 }
