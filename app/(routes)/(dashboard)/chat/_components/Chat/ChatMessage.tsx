@@ -1,19 +1,18 @@
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message"
-import { Reasoning } from "@/components/ai-elements/reasoning"
+import { Reasoning, ReasoningContent, ReasoningTrigger } from "@/components/ai-elements/reasoning"
 import { cn } from "@/lib/utils"
 import type { UIMessage } from "ai"
 import React from "react"
-import { ReasoningContent, ReasoningTrigger } from "../../../../../../components/ai-elements/reasoning"
 import { ToolTypeEnum } from "@/lib/ai/tools/constant"
-import { webSearch } from '../../../../../../lib/ai/tools/webSearch';
-import { extractWebUrl } from '../../../../../../lib/ai/tools/extractWebUrl';
+import ToolCall from "../Tool/ToolCall"
+import ChatMessageAction from "./ChatMessageAction"
 
 type Props = {
   message: UIMessage
   isLoading: boolean
 }
 
-const PreviewMessage = ({ message, isLoading }: Props) => {
+const ChatMessage = ({ message, isLoading }: Props) => {
   return (
     <Message key={message.id} from={message.role} className={cn(message.role !== "user" && "max-w-full!")}>
       <MessageContent
@@ -24,9 +23,15 @@ const PreviewMessage = ({ message, isLoading }: Props) => {
             : "bg-muted! text-foreground! p-2.5! text-[14.5px]"
         )}>
         {message.parts.map((part, i) => {
+          console.log("🚀 ~ ChatMessage ~ part:", part)
+
           switch (part.type) {
             case "text": {
-              return <MessageResponse key={`${message.id}-${i}`}>{part.text}</MessageResponse>
+              return (
+                <MessageResponse key={`${message.id}-${i}`}>
+                  {part.text}
+                </MessageResponse>
+              )
             }
 
             case "reasoning": {
@@ -39,28 +44,38 @@ const PreviewMessage = ({ message, isLoading }: Props) => {
             }
 
             case ToolTypeEnum.CreateNote: {
-
+              return (
+                <ToolCall {...part} isLoading={isLoading} />
+              )
             }
 
             case ToolTypeEnum.SearchNote: {
-
+              return (
+                <ToolCall {...part} isLoading={isLoading} />
+              )
             }
 
             case ToolTypeEnum.WebSearch: {
-
+              return (
+                <ToolCall {...part} isLoading={isLoading} />
+              )
             }
 
             case ToolTypeEnum.ExtractWebUrl: {
-
+              return (
+                <ToolCall {...part} isLoading={isLoading} />
+              )
             }
 
             default:
               return null
           }
         })}
+
+        <ChatMessageAction key={`action-${message.id}`} message={message} isLoading={isLoading} />
       </MessageContent>
     </Message>
   )
 }
 
-export default PreviewMessage
+export default ChatMessage

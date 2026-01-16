@@ -22,10 +22,7 @@ const SearchExtractPreview = React.memo(({ type, input, output }: Props) => {
           {Array.isArray(results) &&
             results?.map((item: any, i: number) => (
               <li key={i}>
-                <a
-                  href={item?.url}
-                  rel="noreferrer"
-                  target="_blank"
+                <a href={item?.url} rel="noreferrer" target="_blank"
                   className="flex items-center gap-2 w-full hover:underline text-blue-500 hover:text-blue-400"
                 >
                   {item.favicon && <img src={item.favicon} alt="favicon" className="w-4 h-4 rounded-sm" />}

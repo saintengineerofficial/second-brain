@@ -5,6 +5,7 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import ToolHeader from './ToolHeader';
 import { ToolTypeEnum } from '@/lib/ai/tools/constant';
 import ToolLoadingIndicator from './ToolLoadingIndicator';
+import ToolRenders from './ToolRenders';
 
 interface ToolCallProps {
   toolCallId: string;
@@ -16,7 +17,7 @@ interface ToolCallProps {
   isLoading: boolean;
 }
 
-const ToolCall = ({ type, state, output, input, isLoading }: ToolCallProps) => {
+const ToolCall = ({ type, state, output, input, isLoading, errorText }: ToolCallProps) => {
   console.log("🚀 ~ ToolCall ~ type, state, output, input:", type, state, output, input)
 
   const toolName = type.split("-")[1]
@@ -24,9 +25,21 @@ const ToolCall = ({ type, state, output, input, isLoading }: ToolCallProps) => {
 
   const renderOutput = () => {
 
-    return (
-      <div></div>
-    )
+    if (state === 'output-available') {
+      const toolReader = ToolRenders[type]
+      if (!toolReader) {
+        return <div className="mt-2">{JSON.stringify(output)}</div>
+      }
+
+      return toolReader(output, input)
+    }
+
+
+    if (state === "output-error") {
+      return <div className="text-destructive">{errorText}</div>;
+    }
+
+    return null
   }
 
   if (isLoading && (state === "input-streaming" || state === "input-available")) {

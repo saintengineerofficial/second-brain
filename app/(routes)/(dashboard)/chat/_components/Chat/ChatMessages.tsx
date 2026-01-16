@@ -1,14 +1,12 @@
 import { ChatStatus, UIMessage } from "ai";
-import React, { FC, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Conversation, ConversationContent } from "@/components/ai-elements/conversation";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircleIcon } from "lucide-react";
 import { RiCircleFill } from "@remixicon/react";
 import { useStickToBottom } from "use-stick-to-bottom";
-import PreviewMessage from "./PreviewMessage";
+import PreviewMessage from "./ChatMessage";
 import LoadingMessages from "./LoadingMessages";
 import Greeting from "./Greeting";
+import ChatErrorAlert from "./ChatErrorAlert";
 
 interface Props {
   chatId?: string;
@@ -58,7 +56,7 @@ const ChatMessages = ({ messages = [], status, isLoading, error }: Props) => {
             )}
 
           {status === "error" && error && (
-            <ErrorAlert title="Chat Error" message={error.message ?? "Something went wrong"} />
+            <ChatErrorAlert title="Chat Error" message={error.message ?? "Something went wrong"} />
           )}
         </ConversationContent>
       </Conversation>
@@ -67,24 +65,4 @@ const ChatMessages = ({ messages = [], status, isLoading, error }: Props) => {
   );
 };
 
-
-
-function ErrorAlert({ title, message }: { title: string; message: string }) {
-  return (
-    <>
-      <Alert
-        variant="destructive"
-        className="w-full bg-destructive/20 border-destructive/50"
-      >
-        <AlertCircleIcon className="h-4 w-4" />
-        <div>
-          <AlertTitle>{title}</AlertTitle>
-          <AlertDescription className="whitespace-break-spaces">
-            <p>{message}</p>
-          </AlertDescription>
-        </div>
-      </Alert>
-    </>
-  );
-}
 export default ChatMessages;

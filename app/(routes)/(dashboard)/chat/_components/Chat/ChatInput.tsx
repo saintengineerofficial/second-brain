@@ -82,10 +82,7 @@ const ChatInput = (props: Props) => {
   }
 
   return (
-    <PromptInput
-      className={cn(`rounded-3xl`, className)}
-      onSubmit={onSubmit}
-    >
+    <PromptInput className={cn(`rounded-3xl`, className)} onSubmit={onSubmit}>
       <div className="relative w-full">
         {selectedTool && (
           <div className="flex items-center gap-1 pt-1.5 pl-2">
