@@ -1,21 +1,27 @@
+'use client'
 import React from "react"
 import ChatHeader from "../../_components/ChatHeader"
 import { generateUUID } from "@/lib/utils";
 import Chat from "../_components/Chat";
+import { useParams } from "next/navigation";
+import { useChatId } from "../_lib/useChat";
 
-type Props = {}
+type ParamsType = { chatId: string }
 
-const Page = (props: Props) => {
+const Page = () => {
+  const { chatId } = useParams<ParamsType>()
   const id = generateUUID();
+
+  const { data: chatData } = useChatId(chatId);
 
   return (
     <React.Fragment>
-      {/* <ChatHeader showActions /> */}
+      <ChatHeader title={chatData?.chat?.title || "Untitled"} showActions />
       <div className="relative w-full">
         <Chat
           key={id}
           chatId={id}
-          initialMessages={[]}
+          initialMessages={chatData?.messages ?? []}
           initialLoading={false}
           onlyInput={false}
         />

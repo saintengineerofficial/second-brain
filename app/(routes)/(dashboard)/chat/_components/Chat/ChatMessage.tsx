@@ -45,25 +45,25 @@ const ChatMessage = ({ message, isLoading }: Props) => {
 
             case ToolTypeEnum.CreateNote: {
               return (
-                <ToolCall {...part} isLoading={isLoading} />
+                <ToolCall key={part.toolCallId} {...part} isLoading={isLoading} />
               )
             }
 
             case ToolTypeEnum.SearchNote: {
               return (
-                <ToolCall {...part} isLoading={isLoading} />
+                <ToolCall key={part.toolCallId} {...part} isLoading={isLoading} />
               )
             }
 
             case ToolTypeEnum.WebSearch: {
               return (
-                <ToolCall {...part} isLoading={isLoading} />
+                <ToolCall key={part.toolCallId}{...part} isLoading={isLoading} />
               )
             }
 
             case ToolTypeEnum.ExtractWebUrl: {
               return (
-                <ToolCall {...part} isLoading={isLoading} />
+                <ToolCall key={part.toolCallId} {...part} isLoading={isLoading} />
               )
             }
 

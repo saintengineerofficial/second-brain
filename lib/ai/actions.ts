@@ -1,7 +1,7 @@
 "use server"
 
 import { generateText, type UIMessage } from "ai"
-import { ModelProvider } from "./ai/providers"
+import { ModelProvider } from "./providers"
 
 export async function generateTitleForUserMessage({ message }: { message: UIMessage }) {
   try {

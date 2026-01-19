@@ -75,9 +75,9 @@ const NoteView = ({ noteId }: Props) => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Untitled note..."
-            className="w-full resize-none border-none! outline-none bg-transparent font-bold
-            placeholder:text-muted-foreground/40 text-4xl leading-tight
-            overflow-hidden px-0! focus-visible:ring-0! focus-visible:ring-offset-0! min-h-[65vh]!"
+            className="w-full resize-none border-none! outline-none bg-transparent 
+            placeholder:text-muted-foreground/40 leading-tight
+            overflow-hidden px-0 focus-visible:ring-0! focus-visible:ring-offset-0! min-h-[65vh]!"
           />
         </div>
 

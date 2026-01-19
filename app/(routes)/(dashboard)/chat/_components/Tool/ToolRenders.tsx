@@ -9,16 +9,16 @@ type ReturnToolRenders = Record<ToolUIPart["type"], (output: any, input: any) =>
 // 元素Map映射
 const ToolRenders: ReturnToolRenders = {
   [ToolTypeEnum.CreateNote]: (output) => {
-    const note = output?.note ?? null;
+    const note = output.data?.note ?? null;
     return (
       <div className="mb-1.5 mt-1">
-        <ToolNoteCard noteId={note?.id} title={note?.title} content={note.content} />
+        <ToolNoteCard noteId={note?.id} title={note?.title} content={note?.content} />
       </div>
     )
   },
   [ToolTypeEnum.SearchNote]: (output, input) => {
     console.log("🚀 ~ ToolRenders ~ output, input:", output, input)
-    const notes = output?.notes ?? [];
+    const notes = output.data?.notes ?? [];
     return (
       <div className="w-full border border-border/40 rounded-lg py-3 px-1.5">
         <p className="text-sm pl-2">Searched for {`"${input?.query}"`}</p>
@@ -26,7 +26,7 @@ const ToolRenders: ReturnToolRenders = {
           {Array.isArray(notes) &&
             notes?.map((note: any) => (
               <li key={note.id}>
-                <ToolNoteCard noteId={note.id} title={note.title} />
+                <ToolNoteCard noteId={note?.id} title={note?.title} />
               </li>
             ))}
         </ul>
